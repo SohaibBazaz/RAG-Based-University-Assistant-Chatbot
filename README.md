@@ -59,6 +59,16 @@ To make this chatbot useful:
 4. The chatbot finds the most relevant parts from the PDF.
 5. It uses those parts to give a short and correct answer.
 
+### How to run this
+### 1. Clone the Repository
+git clone https://github.com/your-username/rag-university-chatbot.git
+cd rag-university-chatbot
+
+### 2. Install Libraries:
+pip install -r requirements.txt
+
+### 3. Run the program:
+streamlit run University_Assistant.py
 
 ## Future Plans
 
