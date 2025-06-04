@@ -70,11 +70,8 @@ To make this chatbot useful:
 
 ## Team Members
 
-- Sohaib Ahmed Bazaz (231182)
-- Muhammad Umar (231200)
-- Maaz Akram (231192)
-
-Department of Artificial Intelligence  
-Air University
+- Sohaib Ahmed Bazaz
+- Muhammad Umar 
+- Maaz Akram 
 
 
