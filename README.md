@@ -61,14 +61,14 @@ To make this chatbot useful:
 
 ### How to run this
 ### 1. Clone the Repository
-git clone https://github.com/your-username/rag-university-chatbot.git
-cd rag-university-chatbot
+- git clone https://github.com/your-username/rag-university-chatbot.git
+- cd rag-university-chatbot
 
 ### 2. Install Libraries:
-pip install -r requirements.txt
+- pip install -r requirements.txt
 
 ### 3. Run the program:
-streamlit run University_Assistant.py
+- streamlit run University_Assistant.py
 
 ## Future Plans
 
