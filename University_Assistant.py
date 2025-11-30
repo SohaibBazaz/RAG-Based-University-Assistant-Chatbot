@@ -9,7 +9,7 @@ from langchain_community.document_loaders import PDFPlumberLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 # Gemini API
-API_KEY = "AIzaSyDlk9XfKZvFN--eRT3fCEl2TEdW3-EpLKU"
+API_KEY = "Your api"
 GEMINI_EMBED_URL = f"https://generativelanguage.googleapis.com/v1beta/models/embedding-001:embedText?key={API_KEY}"
 GEMINI_CHAT_URL = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={API_KEY}"
 
@@ -116,4 +116,5 @@ if uploaded_file:
         relevant_contexts = retrieve_relevant_docs(question)
         context = "\n\n".join(relevant_contexts)
         answer = answer_question_with_gemini(question, context)
+
         st.chat_message("assistant").write(answer)
