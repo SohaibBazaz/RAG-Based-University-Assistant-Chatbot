@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University FAQ Assistant</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .chat-container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 600px;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        #chat-box {
+            min-height: 150px;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            background-color: #eaf2ff;
+            white-space: pre-wrap; /* Preserves formatting */
+        }
+        .user-message, .assistant-message {
+            margin-bottom: 10px;
+            padding: 8px;
+            border-radius: 4px;
+        }
+        .user-message {
+            text-align: right;
+            background-color: #d1e7dd; /* Light Green */
+        }
+        .assistant-message {
+            text-align: left;
+            background-color: #f8d7da; /* Light Red/Pink */
+        }
+        #query-form {
+            display: flex;
+        }
+        #user-query {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px 0 0 4px;
+            font-size: 16px;
+        }
+        #send-button {
+            padding: 10px 15px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        #send-button:disabled {
+            background-color: #a0c9ff;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <h1>🎓 University FAQ Assistant</h1>
+        <div id="chat-box">
+            <p class="assistant-message">**Assistant:** Hello! Ask me a question about Air University, FAST, NUST, or National University.</p>
+        </div>
+        
+        <form id="query-form">
+            <input type="text" id="user-query" placeholder="Ask your question here..." required>
+            <button type="submit" id="send-button">Send</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("query-form").addEventListener("submit", async function(event) {
+            event.preventDefault(); // Prevent default form submission
+            
+            const queryInput = document.getElementById("user-query");
+            const sendButton = document.getElementById("send-button");
+            const chatBox = document.getElementById("chat-box");
+            
+            const userQuery = queryInput.value.trim();
+            if (!userQuery) return;
+
+            // Display user's question immediately
+            chatBox.innerHTML += `<p class="user-message">**You:** ${userQuery}</p>`;
+            chatBox.scrollTop = chatBox.scrollHeight; // Scroll to bottom
+
+            // Disable input and button while waiting for response
+            queryInput.disabled = true;
+            sendButton.disabled = true;
+            sendButton.textContent = "Waiting...";
+
+            try {
+                // Call the Flask API
+                const response = await fetch("/api/ask", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ query: userQuery })
+                });
+
+                const data = await response.json();
+                const assistantAnswer = data.answer;
+
+                // Display the assistant's answer
+                chatBox.innerHTML += `<p class="assistant-message">**Assistant:** ${assistantAnswer}</p>`;
+
+            } catch (error) {
+                console.error("Fetch error:", error);
+                chatBox.innerHTML += `<p class="assistant-message" style="color:red;">**Error:** Could not connect to the server or LLaMA/Fuseki APIs. Please check the logs.</p>`;
+            } finally {
+                // Re-enable and reset
+                queryInput.value = "";
+                queryInput.disabled = false;
+                sendButton.disabled = false;
+                sendButton.textContent = "Send";
+                chatBox.scrollTop = chatBox.scrollHeight; // Scroll to bottom again
+            }
+        });
+    </script>
+</body>
+</html>
