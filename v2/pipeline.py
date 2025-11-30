@@ -15,9 +15,9 @@ from nltk.corpus import stopwords
 
 # ---------- CONFIG ----------
 
-FUSEKI_URL = "https://fuseki.sobaz.uk/university_faq/query"
+FUSEKI_URL = "Your fuseki endpoint"
 
-LLAMA_API_URL = "http://llama.sobaz.uk/v1/completions"
+LLAMA_API_URL = "Your llama endpoint"
 
 
 
